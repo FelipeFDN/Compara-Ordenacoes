@@ -12,6 +12,7 @@
  *
  */
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 
 void copia(int *A, int *v, int size);
@@ -27,7 +28,7 @@ int partition(int arr[], int low, int high, int *swapcont);
 int main(){
 
 	int i;
-	int tamanhoVetor = 1000;
+	int tamanhoVetor = 1000000;
     int vetor[tamanhoVetor];
 
     for (i = 0 ; i < tamanhoVetor ; i++)
@@ -40,7 +41,7 @@ int main(){
 	printf("\nVetor tamanho = %d\n\n", tamanhoVetor);
 
 	// bubble sort
-	int bubbleVec[tamanhoVetor];
+	int *bubbleVec = (int *)malloc(tamanhoVetor * sizeof(int));;
 	copia(vetor, bubbleVec, tamanhoVetor);
     clock_t begin = clock();
     printf("\nBubble sort: \n");
@@ -51,9 +52,9 @@ int main(){
 	/*for (i = 0 ; i < tamanhoVetor ; i++)
     	printf("%d ", bubbleVec[i]);*/
 	printf("\n");
-
+    free(bubbleVec);
 	// selection sort
-    int SelectVec[tamanhoVetor];
+    int *SelectVec = (int *)malloc(tamanhoVetor * sizeof(int));;
 	copia(vetor, SelectVec, tamanhoVetor);
     begin = clock();
     printf("\nSelection sort: \n");
@@ -64,9 +65,9 @@ int main(){
 	/*for (i = 0 ; i < tamanhoVetor ; i++)
     	printf("%d ", SelectVec[i]);*/
 	printf("\n");
-
+    free(SelectVec);
 	// insertion sort
-    int InsertVec[tamanhoVetor];
+    int *InsertVec = (int *)malloc(tamanhoVetor * sizeof(int));;
 	copia(vetor, InsertVec, tamanhoVetor);
     printf("\nInsertion sort: \n");
     begin = clock();
@@ -77,9 +78,9 @@ int main(){
 	/*for (i = 0 ; i < tamanhoVetor ; i++)
     	printf("%d ", InsertVec[i]);*/
 	printf("\n");
-
+    free(InsertVec);
 	// quick sort
-    int QuickVec[tamanhoVetor];
+    int *QuickVec = (int *)malloc(tamanhoVetor * sizeof(int));
 	copia(vetor, QuickVec, tamanhoVetor);
     printf("\nQuick sort: ");
     begin = clock();
@@ -91,7 +92,7 @@ int main(){
 	/*for (i = 0 ; i < tamanhoVetor ; i++)
     	printf("%d ", QuickVec[i]);*/
 	printf("\n");
-
+    free(QuickVec);
 	return 0;
 }
 
@@ -122,7 +123,7 @@ void printArray(int n, int* ptr) {
 }
 
 void swap (int *a, int *b){
-   int temp=*(b);
+   long temp=*(b);
    *b=*a;
    *a=temp;
 };

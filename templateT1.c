@@ -1,8 +1,8 @@
 /**
- * @file nome_do_arquivo.c
- * @author Nome_do_Aluno
- * @version 0.3
- * @date 2023-08-28
+ * @file templateT1.c
+ * @author Felipe_Daniel_Nerling
+ * @version 0.1
+ * @date 2023-09-21
  *
  * @copyright Copyright (c) 2023
  *
@@ -19,12 +19,18 @@ void bubbleSort(int *A, int size);
 // void insertionSort(int *A, int size);
 // void quickSort(int *A, int size);
 
+void printArray(int n, int* ptr);
+void swap (int *a, int *b);
+
 
 int main(){
 
 	int i;
-	int vetor[] = {1, 20, -10, 30, 5, 7};
-	int tamanhoVetor = (int)sizeof(vetor)/sizeof(int);
+	int tamanhoVetor = 1000;
+    int vetor[tamanhoVetor];
+
+    for (i = 0 ; i < tamanhoVetor ; i++)
+        vetor[i] = (tamanhoVetor-i);
 
 	printf("\nVetor original: ");
 	for (i = 0 ; i < tamanhoVetor ; i++)
@@ -58,5 +64,25 @@ void copia(int *A, int *V, int size){
 
 void bubbleSort(int *A, int size){
    // implementação do Bubble
-
+   int i, j, t;   
+    for (i = 0; i < size; i++) {   
+        for (j = i + 1; j < size; j++) {   
+            if (*(A + j) < *(A + i)) {   
+                swap((A + j), (A + i)); //Questão 5 - O parâmetro desta função são valores ou ponteiros? Explique. 
+            } 
+        } 
+    }   
 }
+
+void printArray(int n, int* ptr) {
+  for (int i = 0; i < n; ++i) {
+    printf("%d  ", ptr[i]);
+  }
+  printf("\n");
+}
+
+void swap (int *a, int *b){
+   int temp=*(b);
+   *b=*a;
+   *a=temp;
+};

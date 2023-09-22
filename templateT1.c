@@ -15,7 +15,7 @@
 
 void copia(int *A, int *v, int size);
 void bubbleSort(int *A, int size);
-// void selectionSort(int *A, int size);
+void selectionSort(int *A, int size);
 void insertionSort(int *A, int size);
 // void quickSort(int *A, int size);
 
@@ -48,11 +48,18 @@ int main(){
 	printf("\n");
 
 	// selection sort
+    int SelectVec[tamanhoVetor];
+	copia(vetor, SelectVec, tamanhoVetor);
+	selectionSort(SelectVec, tamanhoVetor);
+	printf("\nSelection sort: ");
+	for (i = 0 ; i < tamanhoVetor ; i++)
+    	printf("%d ", SelectVec[i]);
+	printf("\n");
 
 	// insertion sort
     int InsertVec[tamanhoVetor];
 	copia(vetor, InsertVec, tamanhoVetor);
-	bubbleSort(InsertVec, tamanhoVetor);
+	insertionSort(InsertVec, tamanhoVetor);
 	printf("\nInsertion sort: ");
 	for (i = 0 ; i < tamanhoVetor ; i++)
     	printf("%d ", InsertVec[i]);
@@ -99,12 +106,31 @@ void insertionSort(int *A, int size){
     int i,j, min, t;
     int contador=0;
     for (i = 1; i < size; i++) {   
-        
         min=A[i];
         for (j=i; j>=1 && min< A[j-1];j--){
-            A[j]=A[j-1];
-           
+            A[j]=A[j-1];   
         }   
         A[j]=min;
+    }
+}
+
+void selectionSort(int *A, int size){
+    // Implementação do Selection
+    int count = 0;
+    for (int i = 0; i < size - 1; i++) {
+        int min_index = i;
+        //find min index
+        for (int j = i + 1; j < size; j++) {
+            if (A[j] < A[min_index]) {
+                min_index = j;
+
+            }
+        }
+        //swap
+        if (min_index != i) {
+            int temp = A[i];
+            A[i] = A[min_index];
+            A[min_index] = temp;
+        }
     }
 }

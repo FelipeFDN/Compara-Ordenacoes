@@ -16,7 +16,7 @@
 void copia(int *A, int *v, int size);
 void bubbleSort(int *A, int size);
 // void selectionSort(int *A, int size);
-// void insertionSort(int *A, int size);
+void insertionSort(int *A, int size);
 // void quickSort(int *A, int size);
 
 void printArray(int n, int* ptr);
@@ -50,6 +50,13 @@ int main(){
 	// selection sort
 
 	// insertion sort
+    int InsertVec[tamanhoVetor];
+	copia(vetor, InsertVec, tamanhoVetor);
+	bubbleSort(InsertVec, tamanhoVetor);
+	printf("\nInsertion sort: ");
+	for (i = 0 ; i < tamanhoVetor ; i++)
+    	printf("%d ", InsertVec[i]);
+	printf("\n");
 
 	// quick sort
 
@@ -86,3 +93,18 @@ void swap (int *a, int *b){
    *b=*a;
    *a=temp;
 };
+
+void insertionSort(int *A, int size){
+    // Implementação do Insertion
+    int i,j, min, t;
+    int contador=0;
+    for (i = 1; i < size; i++) {   
+        
+        min=A[i];
+        for (j=i; j>=1 && min< A[j-1];j--){
+            A[j]=A[j-1];
+           
+        }   
+        A[j]=min;
+    }
+}

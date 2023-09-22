@@ -17,10 +17,10 @@ void copia(int *A, int *v, int size);
 void bubbleSort(int *A, int size);
 void selectionSort(int *A, int size);
 void insertionSort(int *A, int size);
-// void quickSort(int *A, int size);
+void quickSort(int *A, int start, int end);
 
-void printArray(int n, int* ptr);
 void swap (int *a, int *b);
+int partition(int arr[], int low, int high);
 
 
 int main(){
@@ -66,6 +66,13 @@ int main(){
 	printf("\n");
 
 	// quick sort
+    int QuickVec[tamanhoVetor];
+	copia(vetor, QuickVec, tamanhoVetor);
+	quickSort(QuickVec, 0, tamanhoVetor-1);
+	printf("\nQuick sort: ");
+	for (i = 0 ; i < tamanhoVetor ; i++)
+    	printf("%d ", QuickVec[i]);
+	printf("\n");
 
 	return 0;
 }
@@ -82,7 +89,7 @@ void bubbleSort(int *A, int size){
     for (i = 0; i < size; i++) {   
         for (j = i + 1; j < size; j++) {   
             if (*(A + j) < *(A + i)) {   
-                swap((A + j), (A + i)); //Questão 5 - O parâmetro desta função são valores ou ponteiros? Explique. 
+                swap((A + j), (A + i)); 
             } 
         } 
     }   
@@ -133,4 +140,29 @@ void selectionSort(int *A, int size){
             A[min_index] = temp;
         }
     }
+}
+
+void quickSort(int *A, int start, int end){
+    // Implementação do Quick
+    if (start < end) {
+        // Encontra o índice de partição, arr[p] está agora no lugar correto
+        int pi = partition(A, start, end);
+        // Recursivamente ordena os elementos antes e depois da partição
+        quickSort(A, start, pi - 1);
+        quickSort(A, pi + 1, end);
+    }
+}
+
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high]; // Escolhe o último elemento como pivô
+    int i = (low - 1);    // O índice do menor elemento
+    for (int j = low; j <= high - 1; j++) {
+        // Se o elemento atual for menor ou igual ao pivô
+        if (arr[j] <= pivot) {
+            i++; // Incrementa o índice do menor elemento
+            swap(&arr[i], &arr[j]);
+        }
+    }
+    swap(&arr[i + 1], &arr[high]);
+    return (i + 1);
 }

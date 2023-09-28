@@ -15,24 +15,26 @@
 #include <stdlib.h>
 #include <time.h>
 
-void copia(int *A, int *v, int size);
-void bubbleSort(int *A, int size);
-void selectionSort(int *A, int size);
-void insertionSort(int *A, int size);
-void quickSort(int *A, int start, int end, int *swapcont);
+void copia(long *A, long *v, int size);
+void bubbleSort(long *A, int size);
+void selectionSort(long *A, int size);
+void insertionSort(long *A, int size);
+void quickSort(long *A, int start, int end, long *swapcont);
 
-void swap (int *a, int *b);
-int partition(int arr[], int low, int high, int *swapcont);
+void swap (long *a, long *b);
+long partition(long arr[], int low, int high, long *swapcont);
 
 
 int main(){
 
 	int i;
-	int tamanhoVetor = 100000;
-    int vetor[tamanhoVetor];
+	int tamanhoVetor = 1000000;
+    long vetor[tamanhoVetor];
+
+    srand(time(NULL));
 
     for (i = 0 ; i < tamanhoVetor ; i++)
-        vetor[i] = (tamanhoVetor-i);
+        vetor[i] = rand() % (tamanhoVetor-i);
 
 	/*printf("\nVetor original: ");
 	for (i = 0 ; i < tamanhoVetor ; i++)
@@ -41,7 +43,7 @@ int main(){
 	printf("\nVetor tamanho = %d\n\n", tamanhoVetor);
 
 	// bubble sort
-	int *bubbleVec = (int *)malloc(tamanhoVetor * sizeof(int));;
+	long *bubbleVec = (long *)malloc(tamanhoVetor * sizeof(long));;
 	copia(vetor, bubbleVec, tamanhoVetor);
     clock_t begin = clock();
     printf("\nBubble sort: \n");
@@ -54,7 +56,7 @@ int main(){
 	printf("\n");
     free(bubbleVec);
 	// selection sort
-    int *SelectVec = (int *)malloc(tamanhoVetor * sizeof(int));;
+    long *SelectVec = (long *)malloc(tamanhoVetor * sizeof(long));;
 	copia(vetor, SelectVec, tamanhoVetor);
     begin = clock();
     printf("\nSelection sort: \n");
@@ -67,7 +69,7 @@ int main(){
 	printf("\n");
     free(SelectVec);
 	// insertion sort
-    int *InsertVec = (int *)malloc(tamanhoVetor * sizeof(int));;
+    long *InsertVec = (long *)malloc(tamanhoVetor * sizeof(long));;
 	copia(vetor, InsertVec, tamanhoVetor);
     printf("\nInsertion sort: \n");
     begin = clock();
@@ -80,15 +82,15 @@ int main(){
 	printf("\n");
     free(InsertVec);
 	// quick sort
-    int *QuickVec = (int *)malloc(tamanhoVetor * sizeof(int));
+    long *QuickVec = (long *)malloc(tamanhoVetor * sizeof(long));
 	copia(vetor, QuickVec, tamanhoVetor);
     printf("\nQuick sort: ");
     begin = clock();
-    int swapcont = 0;
+    long swapcont = 0;
 	quickSort(QuickVec, 0, tamanhoVetor-1, &swapcont);
     end = clock();
     time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-	printf("\nTrocas: %d\nTempo: %f\n", swapcont, time_spent);
+	printf("\nTrocas: %ld\nTempo: %f\n", swapcont, time_spent);
 	/*for (i = 0 ; i < tamanhoVetor ; i++)
     	printf("%d ", QuickVec[i]);*/
 	printf("\n");
@@ -96,15 +98,16 @@ int main(){
 	return 0;
 }
 
-void copia(int *A, int *V, int size){
+void copia(long *A, long *V, int size){
 	int i;
 	for (i = 0 ; i < size ; i++)
     	     V[i] = A[i];
 }
 
-void bubbleSort(int *A, int size){
+void bubbleSort(long *A, int size){
    // implementação do Bubble
-   int i, j, t, cont = 0;   
+   int i, j, t;
+   long cont = 0;   
     for (i = 0; i < size; i++) {   
         for (j = i + 1; j < size; j++) {   
             if (*(A + j) < *(A + i)) {   
@@ -112,26 +115,26 @@ void bubbleSort(int *A, int size){
                 cont++;
             } 
         } 
-    }printf("Trocas: %d", cont);   
+    }printf("Trocas: %ld", cont);   
 }
 
-void printArray(int n, int* ptr) {
+void printArray(int n, long* ptr) {
   for (int i = 0; i < n; ++i) {
-    printf("%d  ", ptr[i]);
+    printf("%ld  ", ptr[i]);
   }
   printf("\n");
 }
 
-void swap (int *a, int *b){
+void swap (long *a, long *b){
    long temp=*(b);
    *b=*a;
    *a=temp;
 };
 
-void insertionSort(int *A, int size){
+void insertionSort(long *A, int size){
     // Implementação do Insertion
     int i,j, min, t;
-    int cont=0;
+    long cont=0;
     for (i = 1; i < size; i++) {   
         min=A[i];
         for (j=i; j>=1 && min< A[j-1];j--){
@@ -139,12 +142,12 @@ void insertionSort(int *A, int size){
             cont++;  
         }   
         A[j]=min;
-    }printf("Trocas: %d", cont); 
+    }printf("Trocas: %ld", cont); 
 }
 
-void selectionSort(int *A, int size){
+void selectionSort(long *A, int size){
     // Implementação do Selection
-    int cont = 0;
+    long cont = 0;
     for (int i = 0; i < size - 1; i++) {
         int min_index = i;
         //find min index
@@ -156,28 +159,28 @@ void selectionSort(int *A, int size){
         }
         //swap
         if (min_index != i) {
-            int temp = A[i];
+            long temp = A[i];
             A[i] = A[min_index];
             A[min_index] = temp;
             cont++;
         }
-    }printf("Trocas: %d", cont); 
+    }printf("Trocas: %ld", cont); 
 }
 
-void quickSort(int *A, int start, int end, int *swapcont){
+void quickSort(long *A, int start, int end, long *swapcont){
     // Implementação do Quick
-    int cont = 0;
+    long cont = 0;
     if (start < end) {
         // Encontra o índice de partição, arr[p] está agora no lugar correto
-        int pi = partition(A, start, end, swapcont);
+        long pi = partition(A, start, end, swapcont);
         // Recursivamente ordena os elementos antes e depois da partição
         quickSort(A, start, pi - 1, swapcont);
         quickSort(A, pi + 1, end, swapcont);
     }
 }
 
-int partition(int arr[], int low, int high, int *swapcont) {
-    int pivot = arr[high]; // Escolhe o último elemento como pivô
+long partition(long arr[], int low, int high, long *swapcont) {
+    long pivot = arr[high]; // Escolhe o último elemento como pivô
     int i = (low - 1);    // O índice do menor elemento
     for (int j = low; j <= high - 1; j++) {
         // Se o elemento atual for menor ou igual ao pivô

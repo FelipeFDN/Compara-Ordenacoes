@@ -19,26 +19,29 @@ void copia(long *A, long *v, int size);
 void bubbleSort(long *A, int size);
 void selectionSort(long *A, int size);
 void insertionSort(long *A, int size);
-void quickSort(long *A, int start, int end, long *swapcont);
+void quickSort(long *A, long start, long end, long *swapcont);
+
+long partition_random(long *vet, long start, long end, long *swapcont);
+
 
 void swap (long *a, long *b);
-long partition(long arr[], int low, int high, long *swapcont);
+long partition(long arr[], long low, long high, long *swapcont);
 
 
 int main(){
 
 	int i;
-	int tamanhoVetor = 1000000;
+	int tamanhoVetor = 1000;
     long vetor[tamanhoVetor];
 
     srand(time(NULL));
 
     for (i = 0 ; i < tamanhoVetor ; i++)
-        vetor[i] = rand() % (tamanhoVetor-i);
+        vetor[i] = (tamanhoVetor-i);
 
-	/*printf("\nVetor original: ");
+	printf("\nVetor original: ");
 	for (i = 0 ; i < tamanhoVetor ; i++)
-    	printf("%d ", vetor[i]);*/
+    	printf("%ld ", vetor[i]);
 
 	printf("\nVetor tamanho = %d\n\n", tamanhoVetor);
 
@@ -50,11 +53,12 @@ int main(){
 	bubbleSort(bubbleVec, tamanhoVetor);
     clock_t end = clock();
     double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-	printf("\nTempo: %f\n", time_spent);
-	/*for (i = 0 ; i < tamanhoVetor ; i++)
-    	printf("%d ", bubbleVec[i]);*/
+	printf("\nTempo: %f\n\n", time_spent);
+	for (i = 0 ; i < tamanhoVetor ; i++)
+    	printf("%ld ", bubbleVec[i]);
 	printf("\n");
     free(bubbleVec);
+
 	// selection sort
     long *SelectVec = (long *)malloc(tamanhoVetor * sizeof(long));;
 	copia(vetor, SelectVec, tamanhoVetor);
@@ -63,11 +67,12 @@ int main(){
 	selectionSort(SelectVec, tamanhoVetor);
     end = clock();
     time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-	printf("\nTempo: %f\n", time_spent);
-	/*for (i = 0 ; i < tamanhoVetor ; i++)
-    	printf("%d ", SelectVec[i]);*/
+	printf("\nTempo: %f\n\n", time_spent);
+	for (i = 0 ; i < tamanhoVetor ; i++)
+    	printf("%ld ", SelectVec[i]);
 	printf("\n");
     free(SelectVec);
+
 	// insertion sort
     long *InsertVec = (long *)malloc(tamanhoVetor * sizeof(long));;
 	copia(vetor, InsertVec, tamanhoVetor);
@@ -76,11 +81,12 @@ int main(){
 	insertionSort(InsertVec, tamanhoVetor);
     end = clock();
     time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-	printf("\nTempo: %f\n", time_spent);
-	/*for (i = 0 ; i < tamanhoVetor ; i++)
-    	printf("%d ", InsertVec[i]);*/
+	printf("\nTempo: %f\n\n", time_spent);
+	for (i = 0 ; i < tamanhoVetor ; i++)
+    	printf("%ld ", InsertVec[i]);
 	printf("\n");
     free(InsertVec);
+
 	// quick sort
     long *QuickVec = (long *)malloc(tamanhoVetor * sizeof(long));
 	copia(vetor, QuickVec, tamanhoVetor);
@@ -90,9 +96,9 @@ int main(){
 	quickSort(QuickVec, 0, tamanhoVetor-1, &swapcont);
     end = clock();
     time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-	printf("\nTrocas: %ld\nTempo: %f\n", swapcont, time_spent);
-	/*for (i = 0 ; i < tamanhoVetor ; i++)
-    	printf("%d ", QuickVec[i]);*/
+	printf("\nTrocas: %ld\nTempo: %f\n\n", swapcont, time_spent);
+	for (i = 0 ; i < tamanhoVetor ; i++)
+    	printf("%ld ", QuickVec[i]);
 	printf("\n");
     free(QuickVec);
 	return 0;
@@ -126,7 +132,7 @@ void printArray(int n, long* ptr) {
 }
 
 void swap (long *a, long *b){
-   long temp=*(b);
+   long temp=(*b);
    *b=*a;
    *a=temp;
 };
@@ -167,29 +173,41 @@ void selectionSort(long *A, int size){
     }printf("Trocas: %ld", cont); 
 }
 
-void quickSort(long *A, int start, int end, long *swapcont){
+void quickSort(long A[], long start, long end, long *swapcont){
     // Implementação do Quick
-    long cont = 0;
     if (start < end) {
         // Encontra o índice de partição, arr[p] está agora no lugar correto
-        long pi = partition(A, start, end, swapcont);
+        long pi = partition_random(A, start, end, swapcont);
         // Recursivamente ordena os elementos antes e depois da partição
         quickSort(A, start, pi - 1, swapcont);
         quickSort(A, pi + 1, end, swapcont);
     }
 }
 
-long partition(long arr[], int low, int high, long *swapcont) {
+long partition(long arr[], long low, long high, long *swapcont) {
     long pivot = arr[high]; // Escolhe o último elemento como pivô
-    int i = (low - 1);    // O índice do menor elemento
-    for (int j = low; j <= high - 1; j++) {
+    long i = (low-1);    // O índice do menor elemento
+    for (long j = low; j <= high - 1; j++) {
         // Se o elemento atual for menor ou igual ao pivô
         if (arr[j] <= pivot) {
             i++; // Incrementa o índice do menor elemento
+            
             swap(&arr[i], &arr[j]);
         }
     }
-    swap(&arr[i + 1], &arr[high]);
+    swap(&arr[i+1], &arr[high]);
     (*swapcont)++;
     return (i + 1);
+}
+
+
+long partition_random(long *vet, long start, long end, long *swapcont)
+{
+	// seleciona um número entre fim (inclusive) e inicio (inclusive)
+	long pivo_indice = (rand() % (end - start + 1)) + start;
+	
+	// faz a troca para colocar o pivô no fim
+	swap(&vet[pivo_indice], &vet[end]);
+	// chama a particiona
+	return partition(vet, start, end, swapcont);
 }

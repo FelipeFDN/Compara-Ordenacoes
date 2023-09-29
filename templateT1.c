@@ -2,7 +2,7 @@
  * @file templateT1.c
  * @author Felipe_Daniel_Nerling
  * @version 0.1
- * @date 2023-09-21
+ * @date 2023-09-29
  *
  * @copyright Copyright (c) 2023
  *
@@ -37,7 +37,7 @@ int main(){
     srand(time(NULL));
 
     for (i = 0 ; i < tamanhoVetor ; i++)
-        vetor[i] = (tamanhoVetor-i);
+        vetor[i] = (rand() % tamanhoVetor);
 
 	printf("\nVetor original: ");
 	for (i = 0 ; i < tamanhoVetor ; i++)
